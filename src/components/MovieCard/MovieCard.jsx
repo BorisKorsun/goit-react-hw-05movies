@@ -32,7 +32,9 @@ export default function MovieCard() {
       setScore(data.vote_average);
       setOverview(data.overview);
       setGenres(data.genres);
-      setImageUrl(`https://image.tmdb.org/t/p/original${data.poster_path}`)
+      if(data.poster_path) {
+        setImageUrl(`https://image.tmdb.org/t/p/original${data.poster_path}`)
+      }
     });
   }, [movieId]);
 
@@ -43,7 +45,7 @@ export default function MovieCard() {
         <img width="100%" alt={title} src={imageUrl ? imageUrl : defaultImage} />
         </PosterContainer>
         <InfoContainer>
-          <Title>{`${title}: (${year.slice(0, 4)})`} </Title>
+          <Title>{year ? `${title}: (${year.slice(0, 4)})` : `${title}`} </Title>
           <Score>User score: {Math.round(score * 10)}%</Score>
           <SubTitle>Overview</SubTitle>
           <Desctiption>{overview}</Desctiption>

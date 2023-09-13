@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import API from 'service/api';
 
-const service = new API;
+const service = new API();
 
-export default function MovieList() {
+export default function TrendingMovieList() {
   const [movieList, setMovieList] = useState([])
 
   useEffect(() => {

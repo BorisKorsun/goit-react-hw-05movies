@@ -7,7 +7,7 @@ class API {
   constructor() {
     this.service = axios.create({
       baseURL: BASE_URL,
-      params: { api_key: API_KEY },
+      params: { api_key: API_KEY, query: '' },
     });
   }
 
@@ -24,7 +24,12 @@ class API {
   }
 
   getReviewsById(id) {
-    return this.service.get(`movie/${id}/reviews`)
+    return this.service.get(`movie/${id}/reviews`);
+  }
+
+  getMoviesByTitle(query) {
+    this.service.defaults.params.query = query;
+    return this.service.get('search/movie')
   }
 }
 
