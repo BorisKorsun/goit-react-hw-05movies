@@ -1,12 +1,22 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import API from 'service/api';
 
-export default function MovieList({ movieList }) {
+const service = new API;
+
+export default function MovieList() {
+  const [movieList, setMovieList] = useState([])
+
+  useEffect(() => {
+    service.getTrendingMovies().then(({data}) => setMovieList(data.results))
+  }, [])
+
   return (
     <>
       <ul>
-        {movieList.map(movie => (
-          <li key={movie}>
-            <Link to={`movies/${movie}`}>{movie}</Link>
+        {movieList.map(({id, original_title, name}) => (
+          <li key={id}>
+            <Link to={`movies/${id}`}>{original_title ?? name}</Link>
           </li>
         ))}
       </ul>
