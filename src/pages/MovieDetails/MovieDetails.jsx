@@ -1,9 +1,11 @@
 import { Link, Outlet } from 'react-router-dom';
 
+import MovieCard from 'components/MovieCard';
+
 export default function MovieDetails() {
   return (
     <section>
-      <h3>MovieDetails</h3>
+      <MovieCard/>
       <ul>
         <li>
           <Link to="cast">Cast</Link>
