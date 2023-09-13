@@ -16,7 +16,15 @@ class API {
   }
 
   getMovieById(id) {
-    return this.service.get(`movie/${id}`)
+    return this.service.get(`movie/${id}`);
+  }
+
+  getActorsById(id) {
+    return this.service.get(`movie/${id}/credits`);
+  }
+
+  getReviewsById(id) {
+    return this.service.get(`movie/${id}/reviews`)
   }
 }
 

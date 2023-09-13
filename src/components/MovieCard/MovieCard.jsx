@@ -27,7 +27,6 @@ export default function MovieCard() {
   const { movieId } = useParams();
   useEffect(() => {
     service.getMovieById(movieId).then(({ data }) => {
-      console.log(data);
       setTitle(data.original_title ?? data.name);
       setYear(data.release_date);
       setScore(data.vote_average);
