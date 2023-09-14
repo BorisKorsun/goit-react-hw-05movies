@@ -23,7 +23,7 @@ export default function MovieCard() {
   const [overview, setOverview] = useState('');
   const [genres, setGenres] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
-  
+
   const location = useRef(useLocation());
   const { movieId } = useParams();
   useEffect(() => {
@@ -41,7 +41,9 @@ export default function MovieCard() {
 
   return (
     <>
-    <button type="button"><Link to={location.current.state?.from ?? '/'}>Go back</Link></button>
+      <button type="button">
+        <Link to={location.current.state?.from ?? '/'}>Go back</Link>
+      </button>
       <CardContainer>
         <PosterContainer>
           <img

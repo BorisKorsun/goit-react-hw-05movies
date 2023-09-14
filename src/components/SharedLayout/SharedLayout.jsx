@@ -1,18 +1,19 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import { NavigationList, NavigationLink } from './SharedLayout.styled';
 
 export default function SharedLayout() {
   return (
     <>
       <header>
         <nav>
-          <ul>
+          <NavigationList>
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavigationLink to="/">Home</NavigationLink>
             </li>
             <li>
-              <NavLink to="/movies">Movies</NavLink>
+              <NavigationLink to="/movies">Movies</NavigationLink>
             </li>
-          </ul>
+          </NavigationList>
         </nav>
       </header>
       <main>
