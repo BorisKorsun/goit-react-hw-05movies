@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import API from 'service/api';
 import { ActorPicture } from './Cast.styled';
-import defaultPicture from 'components/default-image.jpg'
+import defaultPicture from 'components/default-image.jpg';
 
 const service = new API();
 
@@ -16,12 +16,19 @@ export default function Cast() {
 
   return (
     <ul>
+      {actors.length === 0 && (
+        <li>We don't have any information about cast for this movie</li>
+      )}
       {actors.map(({ name, profile_path, id }) => {
         return (
           <li key={id}>
             <ActorPicture
               alt={name}
-              src={profile_path ?`https://image.tmdb.org/t/p/original${profile_path}` : defaultPicture}
+              src={
+                profile_path
+                  ? `https://image.tmdb.org/t/p/original${profile_path}`
+                  : defaultPicture
+              }
             />
             <p>{name}</p>
           </li>
