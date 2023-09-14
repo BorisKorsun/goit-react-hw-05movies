@@ -6,16 +6,25 @@ const service = new API();
 
 export default function Reviews() {
   const [reviews, setReviews] = useState([]);
+  const [error, setError] = useState(null);
   const { movieId } = useParams();
 
-    useEffect(() => {
-      service
-        .getReviewsById(movieId)
-        .then(({ data }) => setReviews(data.results));
-    }, [movieId]);
+  useEffect(() => {
+    service
+      .getReviewsById(movieId)
+      .then(({ data }) => setReviews(data.results))
+      .catch(setError);
+  }, [movieId]);
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   return (
     <ul>
-      {reviews.length === 0 && <li>We don't have any reviews for this movie</li>}
+      {reviews.length === 0 && (
+        <li>We don't have any reviews for this movie</li>
+      )}
       {reviews.map(({ author, content, id }) => {
         return (
           <li key={id}>

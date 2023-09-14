@@ -8,11 +8,19 @@ const service = new API();
 
 export default function Cast() {
   const [actors, setActors] = useState([]);
+  const [error, setError] = useState(null);
   const { movieId } = useParams('movieId');
 
   useEffect(() => {
-    service.getActorsById(movieId).then(({ data }) => setActors(data.cast));
+    service
+      .getActorsById(movieId)
+      .then(({ data }) => setActors(data.cast))
+      .catch(setError);
   }, [movieId]);
+
+  if(error) {
+    return <p>{error}</p>
+  }
 
   return (
     <ul>

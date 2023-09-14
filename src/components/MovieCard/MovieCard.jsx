@@ -23,21 +23,29 @@ export default function MovieCard() {
   const [overview, setOverview] = useState('');
   const [genres, setGenres] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
+  const [error, setError] = useState(null);
 
   const location = useRef(useLocation());
   const { movieId } = useParams();
   useEffect(() => {
-    service.getMovieById(movieId).then(({ data }) => {
-      setTitle(data.original_title ?? data.name);
-      setYear(data.release_date);
-      setScore(data.vote_average);
-      setOverview(data.overview);
-      setGenres(data.genres);
-      if (data.poster_path) {
-        setImageUrl(`https://image.tmdb.org/t/p/original${data.poster_path}`);
-      }
-    });
+    service
+      .getMovieById(movieId)
+      .then(({ data }) => {
+        setTitle(data.original_title ?? data.name);
+        setYear(data.release_date);
+        setScore(data.vote_average);
+        setOverview(data.overview);
+        setGenres(data.genres);
+        if (data.poster_path) {
+          setImageUrl(`https://image.tmdb.org/t/p/original${data.poster_path}`);
+        }
+      })
+      .catch(setError);
   }, [movieId]);
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <>

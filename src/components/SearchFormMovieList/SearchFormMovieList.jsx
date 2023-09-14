@@ -6,6 +6,7 @@ const service = new API();
 
 export default function SearchFormMovieList() {
   const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams({ name: '' });
   const movieName = searchParams.get('name') ?? '';
 
@@ -21,7 +22,8 @@ export default function SearchFormMovieList() {
   useEffect(() => {
     service
       .getMoviesByTitle(movieName)
-      .then(({ data }) => setMovies(data.results));
+      .then(({ data }) => setMovies(data.results))
+      .catch(setError);
   }, [movieName]);
 
   const onChange = e => {
@@ -34,6 +36,11 @@ export default function SearchFormMovieList() {
     console.log('submit');
     setSearchParams({});
   };
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   return (
     <>
       <form onSubmit={onSubmit}>
