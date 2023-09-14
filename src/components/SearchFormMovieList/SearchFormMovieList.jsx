@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useLocation } from 'react-router-dom';
 import API from 'service/api';
 
 const service = new API();
@@ -9,6 +9,8 @@ export default function SearchFormMovieList() {
   const [searchParams, setSearchParams] = useSearchParams({ name: '' });
   const movieName = searchParams.get('name') ?? '';
 
+  const location = useLocation();
+
   const updateSearchParams = name => {
     if (name === '') {
       return setSearchParams({});
@@ -17,7 +19,9 @@ export default function SearchFormMovieList() {
   };
 
   useEffect(() => {
-    service.getMoviesByTitle(movieName).then(({ data }) => setMovies(data.results));
+    service
+      .getMoviesByTitle(movieName)
+      .then(({ data }) => setMovies(data.results));
   }, [movieName]);
 
   const onChange = e => {
@@ -40,7 +44,9 @@ export default function SearchFormMovieList() {
         {movies.map(({ id, original_title }) => {
           return (
             <li key={id}>
-              <Link to={`${id}`}>{original_title}</Link>
+              <Link to={`${id}`} state={{ from: location }}>
+                {original_title}
+              </Link>
             </li>
           );
         })}

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { useParams, useLocation, Link } from 'react-router-dom';
 
 import defaultImage from 'components/default-image.jpg';
 import API from 'service/api';
@@ -11,7 +11,7 @@ import {
   Desctiption,
   PosterContainer,
   InfoContainer,
-  GenresList
+  GenresList,
 } from './MovieCard.styled';
 
 const service = new API();
@@ -23,7 +23,8 @@ export default function MovieCard() {
   const [overview, setOverview] = useState('');
   const [genres, setGenres] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
-
+  
+  const location = useRef(useLocation());
   const { movieId } = useParams();
   useEffect(() => {
     service.getMovieById(movieId).then(({ data }) => {
@@ -32,27 +33,34 @@ export default function MovieCard() {
       setScore(data.vote_average);
       setOverview(data.overview);
       setGenres(data.genres);
-      if(data.poster_path) {
-        setImageUrl(`https://image.tmdb.org/t/p/original${data.poster_path}`)
+      if (data.poster_path) {
+        setImageUrl(`https://image.tmdb.org/t/p/original${data.poster_path}`);
       }
     });
   }, [movieId]);
 
   return (
     <>
+    <button type="button"><Link to={location.current.state?.from ?? '/'}>Go back</Link></button>
       <CardContainer>
         <PosterContainer>
-        <img width="100%" alt={title} src={imageUrl ? imageUrl : defaultImage} />
+          <img
+            width="100%"
+            alt={title}
+            src={imageUrl ? imageUrl : defaultImage}
+          />
         </PosterContainer>
         <InfoContainer>
-          <Title>{year ? `${title}: (${year.slice(0, 4)})` : `${title}`} </Title>
+          <Title>
+            {year ? `${title}: (${year.slice(0, 4)})` : `${title}`}{' '}
+          </Title>
           <Score>User score: {Math.round(score * 10)}%</Score>
           <SubTitle>Overview</SubTitle>
           <Desctiption>{overview}</Desctiption>
           <SubTitle>Genres</SubTitle>
           <GenresList>
             {genres.map(({ name, id }) => {
-              return <li key={id}>{name}</li>; 
+              return <li key={id}>{name}</li>;
             })}
           </GenresList>
         </InfoContainer>
