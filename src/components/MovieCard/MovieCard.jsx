@@ -24,9 +24,10 @@ export default function MovieCard() {
   const [genres, setGenres] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
   const [error, setError] = useState(null);
-
+  
   const location = useRef(useLocation());
   const { movieId } = useParams();
+
   useEffect(() => {
     service
       .getMovieById(movieId)

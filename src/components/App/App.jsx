@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from "react";
+import { AppContainer } from './App.styled';
 
 
 import SuspenseFallback from 'components/SuspenseFallback';
@@ -14,7 +15,7 @@ const Reviews = lazy(() => import("components/Reviews"))
 
 export default function App() {
   return (
-    <div>
+    <AppContainer>
       <Suspense fallback={<SuspenseFallback>Loading...</SuspenseFallback>}>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
@@ -27,6 +28,6 @@ export default function App() {
         </Route>
       </Routes>
       </Suspense>
-    </div>
+    </AppContainer>
   );
 }
